@@ -48,7 +48,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* IA_MoveLeftRight;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* IA_Fire;
+
 	void EventAction(const FInputActionValue& Value);
+
+	virtual void Fire() override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Movement")

@@ -23,6 +23,7 @@ ATank::ATank()
 
 	IA_MoveForwardBackforward = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_MoveForwardBackforward.IA_MoveForwardBackforward"), NULL, LOAD_None, NULL);
 	IA_MoveLeftRight = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_MoveLeftRight.IA_MoveLeftRight"), NULL, LOAD_None, NULL);
+	IA_Fire = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_Fire.IA_Fire"), NULL, LOAD_None, NULL);
 
 	IMCTank = LoadObject<UInputMappingContext>(NULL, TEXT("/Game/Inputs/IMC_Tank.IMC_Tank"), NULL, LOAD_None, NULL);
 }
@@ -31,26 +32,6 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (PlayerControllerRef)
-	{
-		FHitResult HitResult;
-
-		PlayerControllerRef->GetHitResultUnderCursor(
-			ECollisionChannel::ECC_Visibility,
-			false,
-			HitResult);
-
-
-
-		DrawDebugSphere(
-			GetWorld(),
-			HitResult.ImpactPoint,
-			25.f,
-			12,
-			FColor::Red,
-			false,
-			-1.f);
-	}
 }
 
 void ATank::BeginPlay()
@@ -73,6 +54,7 @@ void ATank::BeginPlay()
 			// Input Action
 			EnhancedInputComponent->BindAction(IA_MoveForwardBackforward, ETriggerEvent::Triggered, this, &ATank::Move);
 			EnhancedInputComponent->BindAction(IA_MoveLeftRight, ETriggerEvent::Triggered, this, &ATank::Turn);
+			EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Triggered, this, &ATank::Fire);
 		}
 
 		// Input Mapping Context‚ð“o˜^‚·‚é
@@ -95,6 +77,30 @@ void ATank::BeginPlay()
 
 void ATank::EventAction(const FInputActionValue& Value)
 {
+}
+
+void ATank::Fire()
+{
+	if (PlayerControllerRef)
+	{
+		FHitResult HitResult;
+
+		PlayerControllerRef->GetHitResultUnderCursor(
+			ECollisionChannel::ECC_Visibility,
+			false,
+			HitResult);
+
+		DrawDebugSphere(
+			GetWorld(),
+			HitResult.ImpactPoint,
+			25.f,
+			12,
+			FColor::Red,
+			false,
+			-1.f);
+
+		RotateTurret(HitResult.ImpactPoint);
+	}
 }
 
 void ATank::Move(const FInputActionValue& Value)
