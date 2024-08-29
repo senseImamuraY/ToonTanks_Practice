@@ -32,14 +32,24 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (PlayerControllerRef)
+	{
+		FHitResult HitResult;
+
+		PlayerControllerRef->GetHitResultUnderCursor(
+			ECollisionChannel::ECC_Visibility,
+			false,
+			HitResult);
+
+
+		RotateTurret(HitResult.ImpactPoint);
+	}
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// PlayerController‚ðŽæ“¾‚·‚é
-	//APlayerController* controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
 	PlayerControllerRef = Cast<APlayerController>(GetController());
 
@@ -64,14 +74,7 @@ void ATank::BeginPlay()
 		}
 	}
 
-	//DrawDebugSphere(
-	//	GetWorld(),
-	//	GetActorLocation() + FVector(0.f, 0.f, 200.f),
-	//	100.f,
-	//	12,
-	//	FColor::Red,
-	//	true,
-	//	30.f);
+
 
 }
 
@@ -81,6 +84,8 @@ void ATank::EventAction(const FInputActionValue& Value)
 
 void ATank::Fire()
 {
+	Super::Fire();
+
 	if (PlayerControllerRef)
 	{
 		FHitResult HitResult;
@@ -90,16 +95,16 @@ void ATank::Fire()
 			false,
 			HitResult);
 
-		DrawDebugSphere(
-			GetWorld(),
-			HitResult.ImpactPoint,
-			25.f,
-			12,
-			FColor::Red,
-			false,
-			-1.f);
+		//DrawDebugSphere(
+		//	GetWorld(),
+		//	HitResult.ImpactPoint,
+		//	25.f,
+		//	12,
+		//	FColor::Red,
+		//	false,
+		//	-1.f);
 
-		RotateTurret(HitResult.ImpactPoint);
+		//RotateTurret(HitResult.ImpactPoint);
 	}
 }
 

@@ -7,6 +7,8 @@
 #include "BasePawn.generated.h"
 
 class UCapsuleComponent;
+class AProjectile;
+
 
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
@@ -41,6 +43,11 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int32 EditAnywhereInt = 13;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<AProjectile> ProjectileClass;
+
+
 
 public:	
 	// Called every frame
