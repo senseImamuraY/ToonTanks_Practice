@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Projectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -58,11 +59,5 @@ void ABasePawn::Fire()
 	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
 
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
-	UStaticMeshComponent* ProjectileMesh = Projectile->GetMeshComponent();
-
-	float ImpulseValue = 1000.0f;
-	FVector Impulse = GetActorForwardVector() * ImpulseValue;
-
-	ProjectileMesh->AddImpulse(Impulse);
 }
 

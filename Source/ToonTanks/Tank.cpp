@@ -64,7 +64,7 @@ void ATank::BeginPlay()
 			// Input Action
 			EnhancedInputComponent->BindAction(IA_MoveForwardBackforward, ETriggerEvent::Triggered, this, &ATank::Move);
 			EnhancedInputComponent->BindAction(IA_MoveLeftRight, ETriggerEvent::Triggered, this, &ATank::Turn);
-			EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Triggered, this, &ATank::Fire);
+			EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Started, this, &ATank::Fire);
 		}
 
 		// Input Mapping Context‚ð“o˜^‚·‚é

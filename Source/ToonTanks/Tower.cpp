@@ -35,14 +35,15 @@ void ATower::CheckFireCondition()
 {
 	if (InFireRange()) 
 	{
-		DrawDebugSphere(
-			GetWorld(),
-			Tank->GetActorLocation(),
-			25.f,
-			12,
-			FColor::Blue,
-			false,
-			2.f);
+		//DrawDebugSphere(
+		//	GetWorld(),
+		//	Tank->GetActorLocation(),
+		//	25.f,
+		//	12,
+		//	FColor::Blue,
+		//	false,
+		//	2.f);
+		Fire();
 	}
 }
 
