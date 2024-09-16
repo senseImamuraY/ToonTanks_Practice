@@ -11,6 +11,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
+#include "Components/SampleComponent.h"
+
+
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -75,7 +78,7 @@ void ATank::BeginPlay()
 	}
 
 
-
+	//USampleComponent::AttachSampleComponent(this, this->GetActorLocation());
 }
 
 void ATank::EventAction(const FInputActionValue& Value)
