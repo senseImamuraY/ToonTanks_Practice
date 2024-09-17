@@ -10,8 +10,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
-#include "Components/SampleComponent.h"
+#include "HealthComponent.h"
 
 
 ATank::ATank()
@@ -49,6 +48,12 @@ void ATank::Tick(float DeltaTime)
 	}
 }
 
+//void ATank::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+//{
+//	UHealthComponent* HealthComponent = FindComponentByClass<UHealthComponent>();
+//	HealthComponent->DamageTaken();
+//}
+
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
@@ -78,7 +83,7 @@ void ATank::BeginPlay()
 	}
 
 
-	//USampleComponent::AttachSampleComponent(this, this->GetActorLocation());
+	//OnTakeAnyDamage.AddDynamic(this, &ATank::OnTakeDamage);
 }
 
 void ATank::EventAction(const FInputActionValue& Value)

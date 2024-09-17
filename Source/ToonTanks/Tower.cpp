@@ -5,6 +5,7 @@
 #include "Tank.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "HealthComponent.h"
 
 
 ATower::ATower()
@@ -22,6 +23,12 @@ void ATower::Tick(float DeltaTime)
 	}
 }
 
+//void ATower::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+//{
+//	UHealthComponent* HealthComponent = FindComponentByClass<UHealthComponent>();
+//	HealthComponent->DamageTaken();
+//}
+
 void ATower::BeginPlay()
 {
 	Super::BeginPlay();
@@ -29,6 +36,7 @@ void ATower::BeginPlay()
 	Tank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));
 
 	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ATower::CheckFireCondition, FireRate, true);
+	//OnTakeAnyDamage.AddDynamic(this, &ATower::OnTakeDamage);
 }
 
 void ATower::CheckFireCondition()

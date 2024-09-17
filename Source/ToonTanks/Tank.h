@@ -29,6 +29,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//UFUNCTION()
+	//void OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
+
 protected:
 	virtual void BeginPlay() override;
 
