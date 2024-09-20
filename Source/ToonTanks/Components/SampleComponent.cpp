@@ -34,7 +34,7 @@ void USampleComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	ElapsedTime += DeltaTime;
 	FString Message = FString::Printf(TEXT("Actor Elapsed: %f Delta: %f"), ElapsedTime, DeltaTime);
 
-	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Message);
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Message);
 }
 
 void USampleComponent::AttachSampleComponent(AActor* Actor, FVector Location)

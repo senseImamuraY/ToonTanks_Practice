@@ -27,6 +27,12 @@ ABasePawn::ABasePawn()
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
+void ABasePawn::HandleDestruction()
+{
+	// TODO: Visual/sound effects
+
+}
+
 // Called every frame
 void ABasePawn::Tick(float DeltaTime)
 {
@@ -39,6 +45,11 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABasePawn::ActorDied()
+{
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "BasePawnCalled");
 }
 
 void ABasePawn::RotateTurret(FVector LookAtTarget)

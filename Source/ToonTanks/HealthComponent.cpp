@@ -2,6 +2,9 @@
 
 
 #include "HealthComponent.h"
+#include "ToonTankGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "ToonTankGameMode.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -23,6 +26,7 @@ void UHealthComponent::BeginPlay()
 	Health = MaxHealth;
 
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::DamageTaken);
+	ToonTankGameMode = Cast<AToonTankGameMode>(UGameplayStatics::GetGameMode(this));
 }
 
 
@@ -34,18 +38,19 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser)
+
+void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser)
 {
+	//if (GEngine) {
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Damage Taken");
+	//}
 	if (Damage <= 0.f) return;
 
 	Health -= Damage;
-	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+
+	if (Health <= 0.f && ToonTankGameMode)
+	{
+		ToonTankGameMode->ActorDied(DamagedActor);
+	}
 }
-//
-//void UHealthComponent::DamageTaken()
-//{
-//	if (GEngine) {
-//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Damage Taken");
-//	}
-//}
 

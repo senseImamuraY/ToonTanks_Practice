@@ -23,11 +23,19 @@ void ATower::Tick(float DeltaTime)
 	}
 }
 
-//void ATower::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
-//{
-//	UHealthComponent* HealthComponent = FindComponentByClass<UHealthComponent>();
-//	HealthComponent->DamageTaken();
-//}
+void ATower::HandleDestruction()
+{
+	Super::HandleDestruction();
+	Destroy();
+}
+
+void ATower::ActorDied()
+{
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "TowerCalled");
+
+	HandleDestruction();
+	
+}
 
 void ATower::BeginPlay()
 {

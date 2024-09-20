@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Interfaces/Public/ActorDeadInterface.h"
 #include "BasePawn.generated.h"
 
 class UCapsuleComponent;
@@ -11,13 +12,15 @@ class AProjectile;
 
 
 UCLASS()
-class TOONTANKS_API ABasePawn : public APawn
+class TOONTANKS_API ABasePawn : public APawn, public IActorDeadInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
+
+	void HandleDestruction();
 
 protected:
 	void RotateTurret(FVector LookAtTarget);
@@ -56,4 +59,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void ActorDied();
 };

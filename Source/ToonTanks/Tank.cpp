@@ -34,11 +34,11 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (PlayerControllerRef)
+	if (TankPlayerController)
 	{
 		FHitResult HitResult;
 
-		PlayerControllerRef->GetHitResultUnderCursor(
+		TankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);
@@ -48,21 +48,34 @@ void ATank::Tick(float DeltaTime)
 	}
 }
 
-//void ATank::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
-//{
-//	UHealthComponent* HealthComponent = FindComponentByClass<UHealthComponent>();
-//	HealthComponent->DamageTaken();
-//}
+void ATank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+}
+
+void ATank::ActorDied()
+{
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "TankCalled");
+
+	HandleDestruction();
+	if (GetTankPlayerController())
+	{
+		DisableInput(GetTankPlayerController());
+		GetTankPlayerController()->bShowMouseCursor = false;
+	}
+}
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
 
-	PlayerControllerRef = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 
 	// “ü—Í‚ð—LŒø‚É‚·‚é
-	EnableInput(PlayerControllerRef);
+	EnableInput(TankPlayerController);
 
 	if (InputComponent)
 	{
@@ -76,7 +89,7 @@ void ATank::BeginPlay()
 		}
 
 		// Input Mapping Context‚ð“o˜^‚·‚é
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerControllerRef->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TankPlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(IMCTank, 0);
 		}
@@ -94,11 +107,11 @@ void ATank::Fire()
 {
 	Super::Fire();
 
-	if (PlayerControllerRef)
+	if (TankPlayerController)
 	{
 		FHitResult HitResult;
 
-		PlayerControllerRef->GetHitResultUnderCursor(
+		TankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);

@@ -7,6 +7,8 @@
 #include "HealthComponent.generated.h"
 
 
+class AToonTankGameMode;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOONTANKS_API UHealthComponent : public UActorComponent
 {
@@ -26,6 +28,7 @@ private:
 
 	float Health = 0.f;
 
+	AToonTankGameMode* ToonTankGameMode;
 
 public:	
 	// Called every frame

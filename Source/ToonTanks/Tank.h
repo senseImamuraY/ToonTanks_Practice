@@ -29,8 +29,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//UFUNCTION()
-	//void OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
+	void HandleDestruction();
+
+	APlayerController* GetTankPlayerController() const { return TankPlayerController; }
+
+	virtual void ActorDied() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -69,5 +72,5 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Turn(const FInputActionValue& Value);
 
-	APlayerController* PlayerControllerRef;
+	APlayerController* TankPlayerController;
 };
