@@ -6,7 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 #include "HealthComponent.h"
-
+#include "ToonTankGameMode.h"
 
 ATower::ATower()
 {
@@ -26,6 +26,10 @@ void ATower::Tick(float DeltaTime)
 void ATower::HandleDestruction()
 {
 	Super::HandleDestruction();
+
+	AToonTankGameMode* ToonTankGameMode = Cast<AToonTankGameMode>(UGameplayStatics::GetGameMode(this));
+	ToonTankGameMode->SubtractOneFromTowerCount();
+
 	Destroy();
 }
 

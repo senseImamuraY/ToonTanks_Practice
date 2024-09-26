@@ -9,7 +9,8 @@
 
 class UCapsuleComponent;
 class AProjectile;
-
+class UParticleSystem;
+class USoundBase;
 
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn, public IActorDeadInterface
@@ -40,7 +41,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint;
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Super Duper Variables", meta = (AllowPrivateAccess = "true"))
 	int32 VisibleAnywhereInt = 12;
 	
@@ -50,7 +50,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<AProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	UParticleSystem* DeathParticles;
 
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* DeathSound;
 
 public:	
 	// Called every frame

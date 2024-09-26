@@ -11,6 +11,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "HealthComponent.h"
+#include "ToonTankPlayerController.h"
+#include "ToonTankGameMode.h"
 
 
 ATank::ATank()
@@ -34,11 +36,11 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (TankPlayerController)
+	if (ToonTankPlayerController)
 	{
 		FHitResult HitResult;
 
-		TankPlayerController->GetHitResultUnderCursor(
+		ToonTankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);
@@ -62,9 +64,13 @@ void ATank::ActorDied()
 	HandleDestruction();
 	if (GetTankPlayerController())
 	{
-		DisableInput(GetTankPlayerController());
-		GetTankPlayerController()->bShowMouseCursor = false;
+		ToonTankPlayerController->SetPlayerEnabledState(false);
+		//DisableInput(GetTankPlayerController());
+		//GetTankPlayerController()->bShowMouseCursor = false;
 	}
+
+	AToonTankGameMode* ToonTankGameMode = Cast<AToonTankGameMode>(UGameplayStatics::GetGameMode(this));
+	ToonTankGameMode->GameOver(false);
 }
 
 void ATank::BeginPlay()
@@ -72,10 +78,12 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 
 
-	TankPlayerController = Cast<APlayerController>(GetController());
+	APlayerController* TankPlayerController = Cast<APlayerController>(GetController());
+	ToonTankPlayerController = Cast< AToonTankPlayerController>(TankPlayerController);
+
 
 	// “ü—Í‚ð—LŒø‚É‚·‚é
-	EnableInput(TankPlayerController);
+	//EnableInput(TankPlayerController);
 
 	if (InputComponent)
 	{
@@ -89,7 +97,7 @@ void ATank::BeginPlay()
 		}
 
 		// Input Mapping Context‚ð“o˜^‚·‚é
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TankPlayerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(ToonTankPlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(IMCTank, 0);
 		}
@@ -107,11 +115,11 @@ void ATank::Fire()
 {
 	Super::Fire();
 
-	if (TankPlayerController)
+	if (ToonTankPlayerController)
 	{
 		FHitResult HitResult;
 
-		TankPlayerController->GetHitResultUnderCursor(
+		ToonTankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);

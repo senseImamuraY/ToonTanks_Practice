@@ -9,11 +9,10 @@
 #include "InputActionValue.h" // ’Ç‰Á
 #include "Tank.generated.h"
 
-
-
 class UCameraComponent;
 class USpringArmComponent;
 class UInputAction;
+class AToonTankPlayerController;
 
 /**
  * 
@@ -31,7 +30,7 @@ public:
 
 	void HandleDestruction();
 
-	APlayerController* GetTankPlayerController() const { return TankPlayerController; }
+	AToonTankPlayerController* GetTankPlayerController() const { return ToonTankPlayerController; }
 
 	virtual void ActorDied() override;
 
@@ -72,5 +71,5 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Turn(const FInputActionValue& Value);
 
-	APlayerController* TankPlayerController;
+	AToonTankPlayerController* ToonTankPlayerController;
 };
